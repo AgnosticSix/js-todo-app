@@ -1,4 +1,7 @@
 import { Todo } from "../models/todo.model";
+import { createTodoHtml } from "./create-todo-html";
+
+let element;
 
 /**
  * Esta función renderiza los to-dos en el elemento indicado
@@ -7,6 +10,13 @@ import { Todo } from "../models/todo.model";
  */
 export const renderTodos = (elementId, todos = []) => {
 
-    console.log(elementId, todos);
+    if(!element) element = document.querySelector(elementId);
+    if(!element) throw new Error(`Element with id ${elementId} not found`);
+
+    element.innerHTML = '';
+
+    todos.forEach(todo => {
+        element.append(createTodoHtml(todo))
+    });
 
 }
