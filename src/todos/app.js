@@ -4,7 +4,7 @@ import { renderTodos } from './useCases';
 
 const ElementsIds = {
     TodoList: '.todo-list',
-    TodoInput: '#todo-input',
+    TodoInput: '#new-todo-input',
     Filters: '.filters',
     ClearCompleted: '.clear-completed'
 };
@@ -26,5 +26,18 @@ export const App = (elementId) => {
         document.querySelector(elementId).appendChild(app);
         displayTodos();
     })();
+
+    const newDescriptionInput = document.querySelector(ElementsIds.TodoInput);
+
+    newDescriptionInput.addEventListener('keyup', (event) => {
+        if(event.keyCode !== 13) return;
+        if(event.target.value.trim().length === 0) return;
+        if (event.key === 'Enter') {
+            const description = event.target.value;
+            todoStore.addTodo(description);
+            event.target.value = '';
+            displayTodos();
+        }
+    });
 
 }
